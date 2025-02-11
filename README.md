@@ -43,7 +43,7 @@ Este programa foi desenvolvido para controlar um servomotor utilizando o PWM de 
 - Executa movimentação suave entre 0° e 180°.
 - Acende e apaga o LED em intervalos de 1 segundo.
 
-# Apresentação da solução e resultados obtidos - 
+# Vídeo - https://youtu.be/bo4hzWSQV8U
 # Projeto no Wokwi.com - https://wokwi.com/projects/422260045451850753
 
 
