@@ -35,20 +35,36 @@ int main() {
 
     uint slice = pwm_gpio_to_slice_num(SERVO_PIN); // Obtém o slice do PWM
 
+    // 2) Ajusta a posição para 180° (pulso de 2400µs)
+    set_servo_position(slice, 2400);
+    sleep_ms(5000);  // Aguarda 5 segundos
+
+    // 3) Ajusta a posição para 90° (pulso de 1470µs)
+    set_servo_position(slice, 1470);
+    sleep_ms(5000);  // Aguarda 5 segundos
+
+    // 4) Ajusta a posição para 0° (pulso de 500µs)
+    set_servo_position(slice, 500);
+    sleep_ms(5000);  // Aguarda 5 segundos
+
+    // 5) Movimentação suave entre 0° e 180°
+    for (int i = 500; i <= 2400; i += 5) {
+        set_servo_position(slice, i);  // Aumenta suavemente o ciclo ativo
+        sleep_ms(10);   // Atraso de 10ms
+    }
+    for (int i = 2400; i >= 500; i -= 5) {
+        set_servo_position(slice, i);  // Diminui suavemente o ciclo ativo
+        sleep_ms(10);   // Atraso de 10ms
+    }
+
+    // 6) Experimento com o LED RGB (com GPIO 12)
+    gpio_put(LED_PIN, 1); // Acende o LED
+    sleep_ms(1000);  // Mantém o LED aceso por 1 segundo
+    gpio_put(LED_PIN, 0); // Apaga o LED
+    sleep_ms(1000);  // Mantém o LED apagado por 1 segundo
+
+    // Subir e descer continuamente entre 0° e 180°
     while (true) {
-        // 2) Ajusta a posição para 180° (pulso de 2400µs)
-        set_servo_position(slice, 2400);
-        sleep_ms(5000);  // Aguarda 5 segundos
-
-        // 3) Ajusta a posição para 90° (pulso de 1470µs)
-        set_servo_position(slice, 1470);
-        sleep_ms(5000);  // Aguarda 5 segundos
-
-        // 4) Ajusta a posição para 0° (pulso de 500µs)
-        set_servo_position(slice, 500);
-        sleep_ms(5000);  // Aguarda 5 segundos
-
-        // 5) Movimentação suave entre 0° e 180°
         for (int i = 500; i <= 2400; i += 5) {
             set_servo_position(slice, i);  // Aumenta suavemente o ciclo ativo
             sleep_ms(10);   // Atraso de 10ms
@@ -57,14 +73,7 @@ int main() {
             set_servo_position(slice, i);  // Diminui suavemente o ciclo ativo
             sleep_ms(10);   // Atraso de 10ms
         }
-
-        // 6) Experimento com o LED RGB (com GPIO 12)
-        gpio_put(LED_PIN, 1); // Acende o LED
-        sleep_ms(1000);  // Mantém o LED aceso por 1 segundo
-        gpio_put(LED_PIN, 0); // Apaga o LED
-        sleep_ms(1000);  // Mantém o LED apagado por 1 segundo
     }
 
     return 0;
 }
-
